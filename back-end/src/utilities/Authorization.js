@@ -30,4 +30,9 @@ const verifyToken = (token, res, next) => {
     }
 };
 
-module.exports = authorize;
+const extractRole = (token) => {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return userRoleEnum[decoded.role];
+};
+
+module.exports = {authorize, extractRole};

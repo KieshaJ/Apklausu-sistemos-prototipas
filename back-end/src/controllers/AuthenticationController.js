@@ -1,4 +1,5 @@
 import AuthenticationService from './../services/AuthenticationService';
+import {extractRole} from './../utilities/Authorization';
 
 exports.register = async (req, res) => {
     const userDetails = req.body;
@@ -22,7 +23,7 @@ exports.login = async (req, res) => {
 
     try {
         const token = await AuthenticationService.login(userDetails);
-        res.send({status: 200, token: token});
+        res.send({status: 200, token: token, role: extractRole(token)});
     }
     catch(error) {
         res.send({status: 400, error: error.message});
